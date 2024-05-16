@@ -20,13 +20,12 @@
         console.log(`socket => connect`);
         console.log(`socket => connected`, socket.connected);
         console.log(`socket => connected`, socket.id);
-
       });
 
       socket.on("connected", (n) => {
         console.log(`socket => connected`, n);
 
-        socket.emit("hello from client.");
+        socket.emit("สวัสดีนี่คือข้อความจาก client");
       });
 
       socket.on("connect_error", (err) => {
@@ -43,6 +42,11 @@
 
       socket.io.on("reconnect", () => {
         console.log(`socket => reconnect`, socket);
+      });
+
+      //* ======= รับ message จาก server =========
+      socket.on("/chat", async (msg) => {
+        console.log("message from chat :>> ", msg);
       });
     </script>
   </body>

@@ -16,6 +16,8 @@ func main() {
 	server.OnConnect("/", func(s socketio.Conn) error {
 		s.SetContext("")
 		log.Println("connected:", s.ID())
+
+		s.Emit("สวัสดีนี่คือข้อความจาก server")
 		return nil
 	})
 
