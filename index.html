@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO Test</title>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+
+    <button onclick="sendMessage()">reply</button>
+  </head>
+  <body>
+    <h1>Socket.IO Test</h1>
+
+    <script>
+      const socket = io(`http://localhost:3000`, {
+        transports: ["websocket"],
+        reconnection: true,
+        forceNew: true,
+      });
+
+      socket.on("connect", () => {
+        console.log(`socket => connect`);
+        console.log(`socket => connected`, socket.connected);
+        console.log(`socket => connected`, socket.id);
+
+      });
+
+      socket.on("connected", (n) => {
+        console.log(`socket => connected`, n);
+
+        socket.emit("hello from client.");
+      });
+
+      socket.on("connect_error", (err) => {
+        console.log(`websocket err`, err);
+      });
+
+      socket.on("disconnect", () => {
+        console.log(`socket => disconnect`, socket);
+      });
+
+      socket.io.on("reconnect_attempt", () => {
+        console.log(`socket => reconnect_attempt`, socket);
+      });
+
+      socket.io.on("reconnect", () => {
+        console.log(`socket => reconnect`, socket);
+      });
+    </script>
+  </body>
+</html>
